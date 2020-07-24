@@ -17,7 +17,7 @@ public class OptionsScreen extends MyScreen {
 
     @Override
     protected void afterAssetsLoaded() {
-
+        addStage(new OptionsStage(game),1,true);
     }
 
     @Override
