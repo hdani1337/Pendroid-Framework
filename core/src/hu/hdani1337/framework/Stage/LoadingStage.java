@@ -5,16 +5,20 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import hu.csanyzeg.master.MyBaseClasses.Assets.AssetList;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.ResponseViewport;
+import hu.hdani1337.framework.Hud.TextBox;
 
 public class LoadingStage extends hu.csanyzeg.master.MyBaseClasses.Assets.LoadingStage {
 
-    public AssetList assetList = new AssetList();
+    public static AssetList assetList = new AssetList();
     static {
-        //add assets here
+        assetList.collectAssetDescriptor(TextBox.class,assetList);
     }
 
     public LoadingStage(MyGame game) {
         super(new ResponseViewport(900), game);
+        TextBox load = new TextBox(game,"Betöltés...");
+        load.setPosition(getViewport().getWorldWidth()/2-load.getWidth()/2,getViewport().getWorldHeight()/2-load.getHeight()/2);
+        addActor(load);
     }
 
     @Override

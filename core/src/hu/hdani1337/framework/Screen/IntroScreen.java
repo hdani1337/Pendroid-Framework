@@ -17,7 +17,7 @@ public class IntroScreen extends MyScreen {
 
     @Override
     protected void afterAssetsLoaded() {
-
+        addStage(new IntroStage(game),1,false);
     }
 
     @Override

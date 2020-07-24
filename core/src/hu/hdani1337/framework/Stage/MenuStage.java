@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import hu.csanyzeg.master.MyBaseClasses.Assets.AssetList;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
+import hu.csanyzeg.master.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.PrettyStage;
 import hu.csanyzeg.master.MyBaseClasses.Timers.TickTimer;
 import hu.csanyzeg.master.MyBaseClasses.Timers.TickTimerListener;
@@ -19,6 +20,8 @@ import hu.hdani1337.framework.Screen.OptionsScreen;
 import hu.hdani1337.framework.Screen.ShopScreen;
 
 public class MenuStage extends PrettyStage {
+    public static final String MENU_BG_TEXTURE = "pic/backgrounds/menuBg.jpg";
+
     public static AssetList assetList = new AssetList();
     static {
         assetList.collectAssetDescriptor(Logo.class, assetList);
@@ -36,6 +39,7 @@ public class MenuStage extends PrettyStage {
     private TextBox options;
     private TextBox exit;
     private TextBox version;
+    private OneSpriteStaticActor bg;
 
     @Override
     public void assignment() {
@@ -46,16 +50,20 @@ public class MenuStage extends PrettyStage {
         options = new TextBox(game, "Beállítások",1.25f);
         exit = new TextBox(game, "Kilépés",1.25f);
         version = new TextBox(game, "Verzió: 1.0 Alpha");
+        bg = new OneSpriteStaticActor(game,MENU_BG_TEXTURE);
     }
 
     @Override
     public void setSizes() {
         version.setWidth(version.getWidth()*0.9f);
         start.setWidth(start.getWidth()*0.95f);
+        if(getViewport().getWorldWidth() > bg.getWidth()) bg.setWidth(getViewport().getWorldWidth());
     }
 
     @Override
     public void setPositions() {
+        if(getViewport().getWorldWidth() < bg.getWidth()) bg.setX((getViewport().getWorldWidth()-bg.getWidth())/2);
+
         logo.setPosition(getViewport().getWorldWidth()/2-logo.getWidth()/2,getViewport().getWorldHeight()-logo.getHeight()*1.25f);
 
         start.setX(getViewport().getWorldWidth()/2 - start.getWidth()/2);
@@ -161,6 +169,7 @@ public class MenuStage extends PrettyStage {
     @Override
     public void addActors() {
         setAlpha(0);
+        addActor(bg);
         addActor(logo);
         addActor(start);
         addActor(info);

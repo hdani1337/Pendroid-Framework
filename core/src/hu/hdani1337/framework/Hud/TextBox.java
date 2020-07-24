@@ -186,5 +186,11 @@ public class TextBox extends MyGroup implements IPrettyStage {
     public void setColor(Color color){
         textLabel.setColor(color);
     }
+
+    @Override
+    public void setPositionCenter() {
+        if(getStage() != null)
+            setPosition(getStage().getViewport().getWorldWidth()/2-this.getWidth()/2,getStage().getViewport().getWorldHeight()/2-this.getHeight()/2);
+    }
     //endregion
 }
