@@ -3,11 +3,12 @@ package hu.hdani1337.framework.Screen;
 import hu.csanyzeg.master.MyBaseClasses.Assets.AssetList;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.MyScreen;
+import hu.hdani1337.framework.Stage.InfoStage;
 
 public class InfoScreen extends MyScreen {
-    public AssetList assetList = new AssetList();
+    public static AssetList assetList = new AssetList();
     static {
-        //add assets here
+        assetList.collectAssetDescriptor(InfoStage.class, assetList);
     }
 
     public InfoScreen(MyGame game) {
@@ -16,7 +17,7 @@ public class InfoScreen extends MyScreen {
 
     @Override
     protected void afterAssetsLoaded() {
-
+        addStage(new InfoStage(game),1,true);
     }
 
     @Override

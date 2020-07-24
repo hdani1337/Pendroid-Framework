@@ -1,9 +1,15 @@
 package hu.hdani1337.framework.Stage;
 
+import hu.csanyzeg.master.MyBaseClasses.Assets.AssetList;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.PrettyStage;
 
 public class PauseStage extends PrettyStage {
+    public static AssetList assetList = new AssetList();
+    static {
+        //add assets here
+    }
+
     public PauseStage(MyGame game) {
         super(game);
     }

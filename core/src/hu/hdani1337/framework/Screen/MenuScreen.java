@@ -3,11 +3,12 @@ package hu.hdani1337.framework.Screen;
 import hu.csanyzeg.master.MyBaseClasses.Assets.AssetList;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.MyScreen;
+import hu.hdani1337.framework.Stage.MenuStage;
 
 public class MenuScreen extends MyScreen {
-    public AssetList assetList = new AssetList();
+    public static AssetList assetList = new AssetList();
     static {
-        //add assets here
+        assetList.collectAssetDescriptor(MenuStage.class,assetList);
     }
 
     public MenuScreen(MyGame game) {
@@ -16,7 +17,7 @@ public class MenuScreen extends MyScreen {
 
     @Override
     protected void afterAssetsLoaded() {
-
+        addStage(new MenuStage(game),1,true);
     }
 
     @Override

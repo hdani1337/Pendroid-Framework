@@ -2,10 +2,16 @@ package hu.hdani1337.framework.Stage;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import hu.csanyzeg.master.MyBaseClasses.Assets.AssetList;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.PrettyStage;
 
 public class GameOverStage extends PrettyStage {
+    public static AssetList assetList = new AssetList();
+    static {
+        //add assets here
+    }
+
     public GameOverStage(MyGame game) {
         super(game);
     }

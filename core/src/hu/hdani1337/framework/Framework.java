@@ -2,6 +2,7 @@ package hu.hdani1337.framework;
 
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
 import hu.hdani1337.framework.Screen.IntroScreen;
+import hu.hdani1337.framework.Screen.MenuScreen;
 import hu.hdani1337.framework.Stage.LoadingStage;
 
 public class Framework extends MyGame {
@@ -16,7 +17,7 @@ public class Framework extends MyGame {
 	@Override
 	public void create() {
 		super.create();
-		setLoadingStage(new LoadingStage(this));
-		setScreen(new IntroScreen(this));
+		setLoadingStage(null);
+		setScreen(new MenuScreen(this));
 	}
 }
