@@ -26,7 +26,7 @@ public class Framework extends MyGame {
 		setLoadingStage(new LoadingStage(this));
 		setScreen(new IntroScreen(this));
 		try {
-			preferences = Gdx.app.getPreferences("marancsicsDashSave");
+			preferences = Gdx.app.getPreferences("frameworkSave");
 			muted = preferences.getBoolean("muted");
 			setDisplay();
 		}catch (NullPointerException e){
