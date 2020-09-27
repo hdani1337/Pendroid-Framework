@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 import hu.csanyzeg.master.MyBaseClasses.Game.InitableInterface;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
-import hu.csanyzeg.master.MyBaseClasses.Scene2D.IActorComplexCollision;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.IActorOverlaps;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.IActorUtil;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.IActorZindex;
@@ -27,7 +26,7 @@ import hu.csanyzeg.master.MyBaseClasses.WorldHelper.WorldHelper;
 /**
  * Created by tuskeb on 2016. 09. 30..
  */
-public abstract class MyButton extends TextButton implements IOriginChanged, InitableInterface, ITimer, IGame, IActorZindex, WorldActor, IActorUtil, IActorComplexCollision, IElapsedTime, IActorOverlaps {
+public abstract class MyButton extends TextButton implements IOriginChanged, InitableInterface, ITimer, IGame, IActorZindex, WorldActor, IActorUtil, IElapsedTime, IActorOverlaps {
 
     public MyButton(MyGame game, String text, TextButtonStyle style) {
         super(text, style);
@@ -88,16 +87,6 @@ public abstract class MyButton extends TextButton implements IOriginChanged, Ini
 
     //endregion
 
-    //region IActorComplexCollision code
-    @Deprecated
-    protected final HashMap<String, MyShape> shapeMap = new HashMap<String, MyShape>();
-
-    @Deprecated
-    public HashMap<String, MyShape> getCollisionShapeMap(){
-        return shapeMap;
-    }
-    //endregion
-
     //region ElapsedTime code
     protected float elapsedTime = 0;
 
@@ -129,26 +118,22 @@ public abstract class MyButton extends TextButton implements IOriginChanged, Ini
     @Override
     protected void positionChanged() {
         super.positionChanged();
-        positionchangedComplexCollision();
         positionchangedWorldActor();
     }
 
     @Override
     protected void rotationChanged() {
         super.rotationChanged();
-        rotationchangedComplexCollision();
         rotationchangedWorldActor();
     }
 
     public void originChanged(){
-        originchangedComplexCollision();
         originchangedWorldActor();
     }
 
 
     @Override
     public void setSize(float width, float height) {
-        setsizeComplexCollision(getWidth(), getHeight(), width, height);
         setOrigin(getOriginX() * width / getWidth(), getOriginY() * height / getHeight());
         super.setSize(width, height);
     }
@@ -211,7 +196,6 @@ public abstract class MyButton extends TextButton implements IOriginChanged, Ini
     @Override
     protected void drawDebugBounds(ShapeRenderer shapes) {
         super.drawDebugBounds(shapes);
-        drawComplexCollisionDebugBounds(shapes);
     }
 
     @Override

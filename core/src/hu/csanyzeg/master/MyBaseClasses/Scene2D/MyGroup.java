@@ -16,7 +16,7 @@ import hu.csanyzeg.master.MyBaseClasses.SimpleWorld.MyShape;
 import hu.csanyzeg.master.MyBaseClasses.Timers.Timer;
 import hu.csanyzeg.master.MyBaseClasses.WorldHelper.WorldHelper;
 
-public class MyGroup extends Group implements  IOriginChanged, InitableInterface, ITimer, IGame, IActorZindex, WorldActor, IActorUtil, IActorComplexCollision, IElapsedTime, IActorOverlaps{
+public class MyGroup extends Group implements  IOriginChanged, InitableInterface, ITimer, IGame, IActorZindex, WorldActor, IActorUtil, IElapsedTime, IActorOverlaps{
 
     public MyGroup(MyGame game) {
         super();
@@ -82,16 +82,6 @@ public class MyGroup extends Group implements  IOriginChanged, InitableInterface
 
     //endregion
 
-    //region IActorComplexCollision code
-    @Deprecated
-    protected final HashMap<String, MyShape> shapeMap = new HashMap<String, MyShape>();
-
-    @Deprecated
-    public HashMap<String, MyShape> getCollisionShapeMap(){
-        return shapeMap;
-    }
-    //endregion
-
     //region ElapsedTime code
     protected float elapsedTime = 0;
 
@@ -123,26 +113,22 @@ public class MyGroup extends Group implements  IOriginChanged, InitableInterface
     @Override
     protected void positionChanged() {
         super.positionChanged();
-        positionchangedComplexCollision();
         positionchangedWorldActor();
     }
 
     @Override
     protected void rotationChanged() {
         super.rotationChanged();
-        rotationchangedComplexCollision();
         rotationchangedWorldActor();
     }
 
     public void originChanged(){
-        originchangedComplexCollision();
         originchangedWorldActor();
     }
 
 
     @Override
     public void setSize(float width, float height) {
-        setsizeComplexCollision(getWidth(), getHeight(), width, height);
         setOrigin(getOriginX() * width / getWidth(), getOriginY() * height / getHeight());
         super.setSize(width, height);
     }
@@ -205,7 +191,6 @@ public class MyGroup extends Group implements  IOriginChanged, InitableInterface
     @Override
     protected void drawDebugBounds(ShapeRenderer shapes) {
         super.drawDebugBounds(shapes);
-        drawComplexCollisionDebugBounds(shapes);
     }
 
     @Override

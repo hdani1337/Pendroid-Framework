@@ -123,7 +123,7 @@ public interface IActorComplexCollision {
 
     @Deprecated
     public default ArrayList<String> getOtherOverlappedShapeKeys(MyActor anotherActor){
-        return getActorAOverlappedShapeKeys(anotherActor, this);
+        return getActorAOverlappedShapeKeys((IActorComplexCollision) anotherActor, this);
     }
 
     @Deprecated
