@@ -2,7 +2,6 @@ package hu.hdani1337.framework.Stage;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,6 +16,7 @@ import hu.csanyzeg.master.MyBaseClasses.Timers.TickTimerListener;
 import hu.csanyzeg.master.MyBaseClasses.Timers.Timer;
 import hu.hdani1337.framework.Hud.Logo;
 import hu.hdani1337.framework.Hud.TextBox;
+import hu.hdani1337.framework.SoundManager;
 
 import static hu.hdani1337.framework.Framework.muted;
 import static hu.hdani1337.framework.Framework.preferences;
@@ -60,9 +60,9 @@ public class OptionsStage extends PrettyStage {
     public void assignment() {
         Resolution = new Vector2(windowWidth,windowHeight);
         if(windowHeight == 0 && windowWidth == 0) Resolution = new Vector2(1280,720);
-        /*SoundManager.assign();
-        if(!muted)
-            SoundManager.menuMusic.play();*/
+        SoundManager.assign();
+        if(!muted && SoundManager.menuMusic != null)
+            SoundManager.menuMusic.play();
         setBack = false;
         MenuBackground = new OneSpriteStaticActor(game,MENU_BG_TEXTURE);
         backButton = new TextBox(game,"Vissza a menübe");
@@ -122,11 +122,11 @@ public class OptionsStage extends PrettyStage {
                 super.clicked(event, x, y);
                 if(!muted){
                     muted = true;
-                    //SoundManager.menuMusic.pause();
+                    if(SoundManager.menuMusic != null) SoundManager.menuMusic.pause();
                 }
                 else{
                     muted = false;
-                    //SoundManager.menuMusic.play();
+                    if(SoundManager.menuMusic != null) SoundManager.menuMusic.play();
                 }
                 setTexts();
             }
@@ -220,7 +220,7 @@ public class OptionsStage extends PrettyStage {
         //Némítás
         if(muted){
             muteButton.setText("Némítás: Némítva");
-            //music.stop();
+            if(SoundManager.menuMusic != null) SoundManager.menuMusic.stop();
         }
         else{
             muteButton.setText("Némítás: Nincs némítva");

@@ -2,7 +2,6 @@ package hu.hdani1337.framework.Stage;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.csanyzeg.master.MyBaseClasses.Assets.AssetList;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
@@ -14,6 +13,7 @@ import hu.hdani1337.framework.Screen.GameScreen;
 
 import static hu.hdani1337.framework.Framework.muted;
 import static hu.hdani1337.framework.Framework.preferences;
+import static hu.hdani1337.framework.SoundManager.gameMusic;
 
 public class GameOverStage extends PrettyStage {
     //region AssetList
@@ -69,12 +69,13 @@ public class GameOverStage extends PrettyStage {
 
     @Override
     public void addListeners() {
+        //TODO HA LESZ COIN AZT IMPLEMENTÁLNI KELL ITT
         again.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreenWithPreloadAssets(GameScreen.class, false, new LoadingStage(game));
-                //preferences.putLong("coin", Coin.coin);
+                preferences.putLong("coin", 0);
                 preferences.flush();
             }
         });
@@ -83,9 +84,9 @@ public class GameOverStage extends PrettyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //if(!muted) gameMusic.stop();
+                if(!muted && gameMusic != null) gameMusic.stop();
                 game.setScreenBackByStackPopWithPreloadAssets(new LoadingStage(game));
-                //preferences.putLong("coin", Coin.coin);
+                preferences.putLong("coin", 0);
                 preferences.flush();
             }
         });
@@ -142,7 +143,7 @@ public class GameOverStage extends PrettyStage {
         if(getScreen() != null){
             if(getScreen() instanceof GameScreen){
                 if(!GameStage.isAct && GameStage.isGameOver){
-                    //gameMusic.stop();
+                    if(gameMusic != null) gameMusic.stop();
                     makeStage();
                 }
             }

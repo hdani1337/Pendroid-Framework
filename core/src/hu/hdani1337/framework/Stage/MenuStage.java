@@ -19,6 +19,10 @@ import hu.hdani1337.framework.Screen.MenuScreen;
 import hu.hdani1337.framework.Screen.OptionsScreen;
 import hu.hdani1337.framework.Screen.ShopScreen;
 
+import static hu.hdani1337.framework.Framework.muted;
+import static hu.hdani1337.framework.SoundManager.kezdesHang;
+import static hu.hdani1337.framework.SoundManager.kilepesHang;
+
 public class MenuStage extends PrettyStage {
     public static final String MENU_BG_TEXTURE = "pic/backgrounds/menuBg.jpg";
 
@@ -91,7 +95,7 @@ public class MenuStage extends PrettyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 fadeOut = true;
-                //if(!muted) uraim.play(1);
+                if(!muted && kezdesHang != null) kezdesHang.play(1);
                 addTimer(new TickTimer(0.3f, false, new TickTimerListener(){
                     @Override
                     public void onTick(Timer sender, float correction) {
@@ -147,9 +151,9 @@ public class MenuStage extends PrettyStage {
         exit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //if(!muted){
-                  //  hee.play(1);
-                //}
+                if(!muted && kilepesHang != null){
+                    kilepesHang.play(1);
+                }
                 addTimer(new TickTimer(0.5f,false,new TickTimerListener(){
                     @Override
                     public void onStop(Timer sender) {

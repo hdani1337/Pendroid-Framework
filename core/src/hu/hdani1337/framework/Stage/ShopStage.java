@@ -16,6 +16,7 @@ import hu.csanyzeg.master.MyBaseClasses.Timers.Timer;
 import hu.csanyzeg.master.MyBaseClasses.UI.MyLabel;
 import hu.hdani1337.framework.Hud.Logo;
 import hu.hdani1337.framework.Hud.TextBox;
+import hu.hdani1337.framework.SoundManager;
 
 import static hu.hdani1337.framework.Framework.muted;
 import static hu.hdani1337.framework.Framework.preferences;
@@ -48,8 +49,8 @@ public class ShopStage extends PrettyStage {
     //region Absztrakt metódusok
     @Override
     public void assignment() {
-        //SoundManager.assign();
-        //if(!muted) SoundManager.menuMusic.play();
+        SoundManager.assign();
+        if(!muted && SoundManager.menuMusic != null) SoundManager.menuMusic.play();
         MenuBackground = new OneSpriteStaticActor(game,MENU_BG_TEXTURE);
         back = new TextBox(game, "Vissza a menübe");
         //coin = new Coin(game, true);

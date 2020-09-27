@@ -14,6 +14,7 @@ import hu.hdani1337.framework.Screen.GameScreen;
 
 import static hu.hdani1337.framework.Framework.muted;
 import static hu.hdani1337.framework.Framework.preferences;
+import static hu.hdani1337.framework.SoundManager.gameMusic;
 
 public class PauseStage extends PrettyStage {
     //region AssetList
@@ -84,8 +85,8 @@ public class PauseStage extends PrettyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(!muted) {
-                    //gameMusic.stop();
+                if(!muted && gameMusic != null) {
+                    gameMusic.stop();
                 }
                 game.setScreenBackByStackPopWithPreloadAssets(new LoadingStage(game));
                 //preferences.putLong("coin", Coin.coin);
@@ -160,7 +161,7 @@ public class PauseStage extends PrettyStage {
         //Adjuk hozzá a gombokat a stagehez ha még nincsenek rajta
         if(!addedActors) {
             addActors();
-            //music.pause();
+            if(music != null) music.pause();
         }
 
         //Áttűnés
