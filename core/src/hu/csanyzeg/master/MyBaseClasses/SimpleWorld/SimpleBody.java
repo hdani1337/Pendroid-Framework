@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+
 public class SimpleBody extends MyRectangle {
     protected final HashMap<String, MyShape> shapeMap = new HashMap<>();
 

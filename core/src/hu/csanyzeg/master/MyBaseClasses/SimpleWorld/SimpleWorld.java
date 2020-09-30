@@ -1,6 +1,8 @@
 package hu.csanyzeg.master.MyBaseClasses.SimpleWorld;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 
 //TODO: dinamic test típus implementálása
 
