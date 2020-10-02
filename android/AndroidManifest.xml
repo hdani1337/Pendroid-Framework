@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hu.hdani1337.framework" >
 
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="29" />
 
     <application
         android:allowBackup="true"
