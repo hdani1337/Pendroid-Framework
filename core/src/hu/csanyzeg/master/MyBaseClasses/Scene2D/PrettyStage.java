@@ -39,13 +39,13 @@ public abstract class PrettyStage extends MyStage implements IPrettyStage {
 
     /**
      * Az értékek beállítása előtt végrehajtandó utasítások
-     * Pl. debuggoláshos, vagy írhatsz egy programot ide ami minden sikeres lefutásnál lefőz egy kávét
+     * Pl. debuggoláshoz, vagy írhatsz egy programot ide ami minden sikeres lefutásnál lefőz egy kávét
      * **/
     public void beforeInit(){
     }
 
     /**
-     * Az értékek beállítása előtt végrehajtandó utasítások
+     * Az értékek beállítása után végrehajtandó utasítások
      * Pl. itt is főzhetsz le kávét
      * **/
     public void afterInit(){

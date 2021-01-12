@@ -6,9 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import hu.csanyzeg.master.MyBaseClasses.Assets.AssetList;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.PrettyStage;
+import hu.csanyzeg.master.MyBaseClasses.Scene2D.SimplePrettyStage;
 import hu.hdani1337.framework.Hud.TextBox;
 
-public class GameStage extends PrettyStage {
+public class GameStage extends SimplePrettyStage {
     public static AssetList assetList = new AssetList();
     static {
         assetList.collectAssetDescriptor(TextBox.class,assetList);
@@ -16,8 +17,6 @@ public class GameStage extends PrettyStage {
 
     public static boolean isAct;
     public static boolean isGameOver;
-    private double count;
-    private TextBox counter;
     public static long score;
 
     public GameStage(MyGame game) {
@@ -28,10 +27,7 @@ public class GameStage extends PrettyStage {
     public void assignment() {
         isAct = true;
         isGameOver = false;
-        count = 0;
         score = 0;
-        counter = new TextBox(game,count+"");
-
     }
 
     @Override
@@ -56,7 +52,7 @@ public class GameStage extends PrettyStage {
 
     @Override
     public void addActors() {
-        addActor(counter);
+
     }
 
     @Override
@@ -64,8 +60,7 @@ public class GameStage extends PrettyStage {
         super.act(delta);
         if(isAct){
             //A JÁTÉKMENET KÓDJA ITT FUT
-            count+=delta;
-            counter.setText(count+"");
+
         }
     }
 }

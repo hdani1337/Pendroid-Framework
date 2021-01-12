@@ -2,6 +2,7 @@ package hu.csanyzeg.master.MyBaseClasses.Box2dWorld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
+import hu.csanyzeg.master.MyBaseClasses.Scene2D.MyActor;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.MyStage;
 import hu.csanyzeg.master.MyBaseClasses.Timers.TickTimer;
 import hu.csanyzeg.master.MyBaseClasses.Timers.TickTimerListener;
@@ -88,11 +90,7 @@ public abstract class Box2dStage extends HelperStage<World, Box2DWorldHelper> {
                 }
             }
         });
-    }
 
-    @Override
-    public void init() {
-        super.init();
         if (game.debug){
             addTimer(new TickTimer(1.017f, true, new TickTimerListener() {
                 @Override
@@ -159,15 +157,29 @@ public abstract class Box2dStage extends HelperStage<World, Box2DWorldHelper> {
             }
         }
         iterations = 1 + (int)(delta2*iterationPerSec);
-        world.step(delta2, iterations, iterations);
+        world.step(delta2 * timeMultiply, iterations, iterations);
         realElapsedTime += delta;
         lastDelta = delta;
         super.act(delta2);
+    }
+
+    float timeMultiply = 1;
+
+    public float getTimeMultiply() {
+        return timeMultiply;
+    }
+
+    public void setTimeMultiply(float timeMultiply) {
+        this.timeMultiply = timeMultiply;
     }
 
     @Override
     public void draw() {
         super.draw();
         if(game.debug) box2DDebugRenderer.render(world, getCamera().combined);
+    }
+
+    public static Body getBody(MyActor actor){
+        return ((Body)actor.getActorWorldHelper().getBody());
     }
 }

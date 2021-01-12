@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import hu.csanyzeg.master.MyBaseClasses.Scene2D.IGame;
 
 
 public class SimpleBody extends MyRectangle {
@@ -454,6 +455,26 @@ public class SimpleBody extends MyRectangle {
     }
 
 
+    public void alphaToFixTIme(float sec, float a) {
+        colorToFixTime(sec, color.r, color.g, color.b, a);
+    }
+
+
+    public void colorToFixTime(float sec, float r, float g, float b, float a){
+        Color color = new Color();
+        color.a= a;
+        color.b = b;
+        color.g = g;
+        color.r = r;
+        targetColor = color;
+        colorToFixTime(color, sec);
+    }
+
+
+    public void alphaTo(float sec, float a) {
+        colorTo(sec, color.r, color.g, color.b, a);
+    }
+
     public void colorTo(float sec, float r, float g, float b, float a) {
         targetColor = color;
         setColorVelocity(r, g, b, a);
@@ -538,7 +559,6 @@ public class SimpleBody extends MyRectangle {
 
         if (linearTimer >= 0f){
             linearTimer -= deltaTime;
-
             if (linearTimer <= 0f){
                 linearTimer = INVALIDTIMER;
                 linearVelocity.set(0f,0f);
@@ -656,6 +676,19 @@ public class SimpleBody extends MyRectangle {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    public void setColor(float r, float g, float b, float a) {
+        this.color.a = a;
+        this.color.r = r;
+        this.color.g = g;
+        this.color.b = b;
+    }
+
+
+    public void setAlpha(float a) {
+        this.color.a = a;
+    }
+
 
     public void addBaseCollisionRectangleShape(){
         addCollisionShape(BASERECTANGLE,new MyRectangle(width, height,offsetX,offsetY, originX, originY, rotation, offsetRotation, centerX, centerY,false));

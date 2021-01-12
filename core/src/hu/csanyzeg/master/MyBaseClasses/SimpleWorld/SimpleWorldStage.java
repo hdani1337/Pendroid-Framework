@@ -38,18 +38,13 @@ public class SimpleWorldStage extends HelperStage<SimpleWorld, SimpleWorldHelper
 
     public SimpleWorldStage(Viewport viewport, MyGame game) {
         super(viewport, game);
-    }
-
-    @Override
-    public void init() {
-        super.init();
         world  = new SimpleWorld();
         simpleWorldDebugRenderer = new SimpleWorldDebugRenderer();
         if (game.debug){
             addTimer(new TickTimer(1.017f, true, new TickTimerListener() {
                 @Override
                 public void onRepeat(TickTimer sender) {
-                    Gdx.app.log("world", "DT world step: " + (lastWorldMs / 1000000f) +" ms; ET world & SWstage: " + elapsedTime + " \tWorld iterations per delta: " + iterations + " Helper count: " + getHelpers().size);
+                    Gdx.app.log("world", "DT world step: " + (lastWorldMs / 1000000f) +" ms; ET world & SWstage: " + elapsedTime + " \tWorld iterations per delta: " + iterations + " Body count: " + world.getBodyCount());
                 }
             }));
         };
@@ -103,4 +98,7 @@ public class SimpleWorldStage extends HelperStage<SimpleWorld, SimpleWorldHelper
         if(game.debug) simpleWorldDebugRenderer.render(world, Gdx.graphics.getDeltaTime(), getCamera().combined);
     }
 
+    public static SimpleBody getBody(WorldActor actor){
+        return ((SimpleBody)actor.getActorWorldHelper().getBody());
+    }
 }

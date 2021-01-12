@@ -15,6 +15,7 @@ public class TextBox extends MyGroup implements IPrettyStage {
     //region AssetList
     public static final String TEXTBOX_TEXTURE = "pic/ui/textBG.png";
     public static final String RETRO_FONT = "font/fontstyle.ttf";
+    public static final String VERDANA_FONT = "font/voyage.ttf";
 
     public static AssetList assetList = new AssetList();
     static {

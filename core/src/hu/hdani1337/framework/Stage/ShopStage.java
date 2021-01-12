@@ -20,8 +20,8 @@ import hu.hdani1337.framework.SoundManager;
 
 import static hu.hdani1337.framework.Framework.muted;
 import static hu.hdani1337.framework.Framework.preferences;
+import static hu.hdani1337.framework.GlobalAssets.MENU_BG_TEXTURE;
 import static hu.hdani1337.framework.Hud.TextBox.RETRO_FONT;
-import static hu.hdani1337.framework.Stage.MenuStage.MENU_BG_TEXTURE;
 
 public class ShopStage extends PrettyStage {
     //region AssetList
@@ -50,7 +50,8 @@ public class ShopStage extends PrettyStage {
     @Override
     public void assignment() {
         SoundManager.assign();
-        if(!muted && SoundManager.menuMusic != null) SoundManager.menuMusic.play();
+        if(!muted && SoundManager.menuMusic != null)
+            SoundManager.menuMusic.play();
         MenuBackground = new OneSpriteStaticActor(game,MENU_BG_TEXTURE);
         back = new TextBox(game, "Vissza a menübe");
         //coin = new Coin(game, true);

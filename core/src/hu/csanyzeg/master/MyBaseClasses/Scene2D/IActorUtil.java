@@ -368,14 +368,30 @@ public interface IActorUtil {
 
     public default void setOrigintoCenter(){
         Actor actor = (Actor)this;
-        actor.setOrigin(actor.getWidth()/2, actor.getHeight()/2);
+        try {
+            actor.setOrigin(actor.getWidth()/2, actor.getHeight()/2);
+        }catch (NullPointerException e){
+            /**
+             * MyGroupnál lép fel a kivétel akkor, ha overrideoljuk a getWidth()-et vagy getHeight()-ot és abban meghívjuk a groupban lévő actorokat
+             * Értelemszerűen mivel csak a konstruktorban rendelünk értéket az actorokhoz ezért ekkor a getWidht()/getHeight() null-ra mutat
+             * **/
+            System.out.println("!!!" + actor.getClass().getSimpleName() + " IS NULL AT setOrigintoCenter METHOD!!!");
+        }
+
     }
 
     public default String toStr() {
         Actor actor = (Actor)this;
-        return actor.toString() +  " {" +
+        String name = actor.getName();
+        if (name == null) {
+            name = getClass().getName();
+            int dotIndex = name.lastIndexOf('.');
+            if (dotIndex != -1) name = name.substring(dotIndex + 1);
+        }
+
+        return name +  " {" +
                 " X = " + actor.getX() +
-                " Y = " + actor.getX() +
+                " Y = " + actor.getY() +
                 ", width = " + actor.getWidth() +
                 ", height = " + actor.getHeight() +
                 ", rotation = " + actor.getRotation() +

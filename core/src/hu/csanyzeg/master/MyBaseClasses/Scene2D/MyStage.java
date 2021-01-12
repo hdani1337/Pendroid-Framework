@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Created by tuskeb on 2016. 09. 30..
  */
-abstract public class MyStage extends Stage implements InitableInterface, IZindex, ITimer, IGame, IElapsedTime {
+abstract public class MyStage extends Stage implements IZindex, ITimer, IGame, IElapsedTime {
     public MyGame game;
 
     private MyScreen screen = null;
@@ -93,12 +93,6 @@ abstract public class MyStage extends Stage implements InitableInterface, IZinde
     public MyStage(Viewport viewport, MyGame game) {
         super(viewport);
         this.game = game;
-        setCameraResetToCenterOfScreen();
-        init();
-    }
-
-    @Override
-    public void init() {
         if(game.debug){
             addTimer(new TickTimer(2f, true, new TickTimerListener() {
                 @Override
@@ -107,7 +101,13 @@ abstract public class MyStage extends Stage implements InitableInterface, IZinde
                 }
             }));
         }
+        OrthographicCamera c = (OrthographicCamera) getCamera();
+        cameraTargetX = c.position.x;
+        cameraTargetY = c.position.y;
+        cameraTargetZoom = c.zoom;
+        setCameraResetToLeftBottomOfScreen();
     }
+
 
     public interface BackButtonListener {
         public void backKeyDown();
@@ -181,12 +181,13 @@ abstract public class MyStage extends Stage implements InitableInterface, IZinde
     }
 
 
+    public static float CAMERAINVALID = Float.POSITIVE_INFINITY;
 
-    private float cameraTargetX = 0;
-    private float cameraTargetY = 0;
-    private float cameraTargetZoom = 0;
-    private float cameraMoveSpeed = 0;
-    private float cameraZoomSpeed = 0;
+    private float cameraTargetX = CAMERAINVALID;
+    private float cameraTargetY = CAMERAINVALID;
+    private float cameraTargetZoom = CAMERAINVALID;
+    private float cameraMoveSpeed = 20f;
+    private float cameraZoomSpeed = 0.2f;
 
     public float getCameraMoveToX() {
         return cameraTargetX;
@@ -272,6 +273,8 @@ abstract public class MyStage extends Stage implements InitableInterface, IZinde
             c.translate((v.getWorldWidth() - v.getMinWorldWidth() / 2) < 0 ? 0 : -((v.getWorldWidth() - v.getMinWorldWidth()) / 2),
                     ((v.getWorldHeight() - v.getMinWorldHeight()) / 2) < 0 ? 0 : -((v.getWorldHeight() - v.getMinWorldHeight()) / 2));
             c.update();
+            cameraTargetX = c.position.x;
+            cameraTargetY = c.position.y;
         }
     }
     public void setCameraResetToLeftBottomOfScreen(){
@@ -279,6 +282,8 @@ abstract public class MyStage extends Stage implements InitableInterface, IZinde
         Viewport v = getViewport();
         setCameraZoomXY(v.getWorldWidth()/2, v.getWorldHeight()/2,1);
         c.update();
+        cameraTargetX = c.position.x;
+        cameraTargetY = c.position.y;
 
     }
 
@@ -288,7 +293,7 @@ abstract public class MyStage extends Stage implements InitableInterface, IZinde
     }
 
     protected void resized(){
-        setCameraResetToCenterOfScreen();
+
     };
 
 
@@ -303,35 +308,41 @@ abstract public class MyStage extends Stage implements InitableInterface, IZinde
 
         OrthographicCamera c = (OrthographicCamera)getCamera();
         if (cameraTargetX!=c.position.x || cameraTargetY!=c.position.y || cameraTargetZoom!=c.zoom){
-            if (Math.abs(c.position.x-cameraTargetX)<cameraMoveSpeed*delta) {
-                c.position.x = (c.position.x + cameraTargetX) / 2;
-            } else {
-                if (c.position.x<cameraTargetX){
-                    c.position.x += cameraMoveSpeed*delta;
-                }else{
-                    c.position.x -= cameraMoveSpeed*delta;
+            if (cameraTargetX != CAMERAINVALID && cameraTargetY != CAMERAINVALID) {
+                if (Math.abs(c.position.x - cameraTargetX) < cameraMoveSpeed * delta) {
+                    c.position.x = (c.position.x + cameraTargetX) / 2f;
+                } else {
+                    if (c.position.x < cameraTargetX) {
+                        c.position.x += cameraMoveSpeed * delta;
+                    } else {
+                        c.position.x -= cameraMoveSpeed * delta;
+                    }
                 }
-            }
-            if (Math.abs(c.position.y-cameraTargetY)<cameraMoveSpeed*delta) {
-                c.position.y = (c.position.y + cameraTargetY) / 2;
-            } else {
-                if (c.position.y<cameraTargetY){
-                    c.position.y += cameraMoveSpeed*delta;
-                }else{
-                    c.position.y -= cameraMoveSpeed*delta;
-                }
-            }
-            if (Math.abs(c.zoom-cameraTargetZoom)<cameraZoomSpeed*delta) {
-                c.zoom = (c.zoom + cameraTargetZoom) / 2;
-            } else {
-                if (c.zoom<cameraTargetZoom){
-                    c.zoom += cameraZoomSpeed*delta;
-                }else{
-                    c.zoom -= cameraZoomSpeed*delta;
-                }
-            }
-            c.update();
 
+                if (Math.abs(c.position.y - cameraTargetY) < cameraMoveSpeed * delta) {
+                    c.position.y = (c.position.y + cameraTargetY) / 2f;
+                } else {
+                    if (c.position.y < cameraTargetY) {
+                        c.position.y += cameraMoveSpeed * delta;
+                    } else {
+                        c.position.y -= cameraMoveSpeed * delta;
+                    }
+                }
+                c.update();
+            }
+            if (cameraTargetZoom != CAMERAINVALID) {
+                System.out.println(cameraTargetZoom == CAMERAINVALID);
+                if (Math.abs(c.zoom - cameraTargetZoom) < cameraZoomSpeed * delta) {
+                    c.zoom = (c.zoom + cameraTargetZoom) / 2f;
+                } else {
+                    if (c.zoom < cameraTargetZoom) {
+                        c.zoom += cameraZoomSpeed * delta;
+                    } else {
+                        c.zoom -= cameraZoomSpeed * delta;
+                    }
+                }
+                c.update();
+            }
         }
         actTime = ((float)(TimeUtils.nanoTime() - nanoTimet)) / 100000;
     }
